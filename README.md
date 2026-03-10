@@ -4,7 +4,7 @@
 
 ## Overview
 
-In this lab you will crowd-build a real object-detection dataset from scratch. The class will collectively assemble approximately 3,000 images with YOLO-format bounding-box labels for a single category — **Cat** — sourced from the Open Images V6 validation set. Each student downloads, labels, and verifies a non-overlapping slice of 100 images, then submits their portion so the class can combine them into one training-ready dataset.
+In this lab you will crowd-build a real object-detection dataset from scratch. The class will collectively assemble thousands of images with YOLO-format bounding-box labels for a single category — **Cat** — sourced from the Open Images V6 training set. Each student downloads, labels, and verifies a non-overlapping slice of 100 images, then submits their portion so the class can combine them into one training-ready dataset.
 
 This mirrors how production ML teams build datasets: a large pool of raw data is partitioned, annotated by multiple contributors, verified for consistency, and merged. You will experience the full pipeline — from sourcing metadata and resolving label formats to running quality checks before submission.
 
@@ -32,26 +32,24 @@ By the end of this lab you should be able to:
 
 ## Step 1: Download the Open Images V6 metadata CSVs
 
-Go to the official Open Images V6 download page:
+Download these three CSV files directly (right-click → Save As, or use `curl`/`wget`):
 
-**<https://storage.googleapis.com/openimages/web/download_v6.html>**
-
-Download these three CSV files:
-
-| File | What it contains |
-|---|---|
-| `class-descriptions-boxable.csv` | Maps machine-readable label codes (MIDs) to human-readable names |
-| `validation-annotations-bbox.csv` | Bounding-box annotations for all validation images |
-| `validation-images-with-rotation.csv` | Image metadata including download URLs |
+| File | What it contains | Direct link |
+|---|---|---|
+| `class-descriptions-boxable.csv` | Maps machine-readable label codes (MIDs) to human-readable names | [Download](https://storage.googleapis.com/openimages/v5/class-descriptions-boxable.csv) |
+| `oidv6-train-annotations-bbox.csv` | Bounding-box annotations for all training images | [Download](https://storage.googleapis.com/openimages/v6/oidv6-train-annotations-bbox.csv) |
+| `train-images-boxable-with-rotation.csv` | Image metadata including download URLs | [Download](https://storage.googleapis.com/openimages/2018_04/train/train-images-boxable-with-rotation.csv) |
 
 Save them in a folder called `openimages_v6/` inside your clone:
 
 ```
 openimages_v6/
   class-descriptions-boxable.csv
-  validation-annotations-bbox.csv
-  validation-images-with-rotation.csv
+  oidv6-train-annotations-bbox.csv
+  train-images-boxable-with-rotation.csv
 ```
+
+> **Note:** The training annotations CSV is ~2.2 GB. The download may take a few minutes depending on your connection.
 
 These files are shared infrastructure — every student uses the same CSVs, which ensures everyone works from the same source of truth.
 
@@ -59,14 +57,14 @@ These files are shared infrastructure — every student uses the same CSVs, whic
 
 ## Step 2: Build the master list of Cat images
 
-The master list is the canonical, sorted list of all validation ImageIDs that contain at least one real (non-group, non-depiction) Cat bounding box. Every student must produce the identical list so that the partitioning in Step 4 is consistent.
+The master list is the canonical, sorted list of all training ImageIDs that contain at least one real (non-group, non-depiction) Cat bounding box. Every student must produce the identical list so that the partitioning in Step 4 is consistent.
 
 Run:
 
 ```bash
 python build_master_list.py \
   --class-descriptions openimages_v6/class-descriptions-boxable.csv \
-  --bboxes openimages_v6/validation-annotations-bbox.csv \
+  --bboxes openimages_v6/oidv6-train-annotations-bbox.csv \
   --out master_cat_imageids.txt
 ```
 
@@ -124,11 +122,11 @@ The output is your personal list of 100 ImageIDs.
 
 ## Step 5: Download your images
 
-Use the validation image metadata CSV to resolve each ImageID to a download URL:
+Use the training image metadata CSV to resolve each ImageID to a download URL:
 
 ```bash
 python download_images.py \
-  --image-metadata openimages_v6/validation-images-with-rotation.csv \
+  --image-metadata openimages_v6/train-images-boxable-with-rotation.csv \
   --imageids my_imageids.txt \
   --out images
 ```
@@ -163,7 +161,7 @@ Run:
 ```bash
 python export_yolo_labels.py \
   --class-descriptions openimages_v6/class-descriptions-boxable.csv \
-  --bboxes openimages_v6/validation-annotations-bbox.csv \
+  --bboxes openimages_v6/oidv6-train-annotations-bbox.csv \
   --imageids my_imageids.txt \
   --out labels
 ```

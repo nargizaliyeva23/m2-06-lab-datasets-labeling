@@ -13,7 +13,7 @@ empty label file.
 Usage:
   python export_yolo_labels.py \
     --class-descriptions openimages_v6/class-descriptions-boxable.csv \
-    --bboxes openimages_v6/validation-annotations-bbox.csv \
+    --bboxes openimages_v6/oidv6-train-annotations-bbox.csv \
     --imageids my_imageids.txt \
     --out labels
 """

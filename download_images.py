@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Download images by ImageID from Open Images metadata CSV.
 
-Expects the validation-images-with-rotation.csv which contains an
+Expects the train-images-boxable-with-rotation.csv which contains an
 OriginalURL (or Thumbnail300KURL) column for each ImageID.
 
 Usage:
   python download_images.py \
-    --image-metadata openimages_v6/validation-images-with-rotation.csv \
+    --image-metadata openimages_v6/train-images-boxable-with-rotation.csv \
     --imageids my_imageids.txt \
     --out images
 """

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the canonical master list of validation ImageIDs containing Cats.
+"""Build the canonical master list of training ImageIDs containing Cats.
 
 Output: a text file with one ImageID per line, sorted lexicographically.
 
@@ -11,7 +11,7 @@ Filters applied:
 Usage:
   python build_master_list.py \
     --class-descriptions openimages_v6/class-descriptions-boxable.csv \
-    --bboxes openimages_v6/validation-annotations-bbox.csv \
+    --bboxes openimages_v6/oidv6-train-annotations-bbox.csv \
     --out master_cat_imageids.txt
 """
 
