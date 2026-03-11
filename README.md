@@ -220,11 +220,17 @@ Save the report as `report.pdf` (or `report.md`).
 
 ## Submission
 
-This lab does **not** use the standard fork-and-pull-request workflow. Instead, you upload your dataset to a shared Google Drive folder so the class can assemble the full combined dataset.
+This lab has **two** submission steps — a Pull Request for AI grading and a Google Drive upload for the shared class dataset.
 
-### Step A: Upload your dataset to Google Drive
+### Step A: Submit a Pull Request
 
-Upload a folder named with your student ID to the shared class folder:
+Push your work to your fork and open a Pull Request. Your PR must include `my_imageids.txt` in the repository root — the AI grading system checks this file to verify that your image selection follows the deterministic partitioning scheme, contains at least 100 ImageIDs, and is non-overlapping with other students.
+
+Paste the link to your Pull Request in the Student Portal.
+
+### Step B: Upload your dataset to Google Drive
+
+Upload a folder named with your student ID to the shared class folder so the full dataset can be assembled:
 
 **[Shared Google Drive folder](https://drive.google.com/drive/folders/1qeGvkaK7UkNMYoESQHxGbV4DRH8EgEb0?usp=sharing)**
 
@@ -242,20 +248,18 @@ Your folder must have this exact structure:
 
 Every image must have a matching label file, even if the label file is empty.
 
-### Step B: Submit confirmation in the Student Portal
-
-Upload your `report.pdf` (or `report.md`) file in the Student Portal to confirm your submission.
-
 ### Definition of done (checklist)
 
-Before you upload, make sure:
+Before you submit, make sure:
 
 - [ ] `verify_yolo_dataset.py` prints **PASS** with zero missing images, zero missing labels, and zero bad lines.
 - [ ] Your `images/` folder contains exactly 100 `.jpg` files.
 - [ ] Your `labels/` folder contains exactly 100 `.txt` files.
+- [ ] Your `my_imageids.txt` contains at least 100 ImageIDs (one per line, sorted).
 - [ ] Your report covers all four sections (metadata, tricky cases, bias analysis, feedback loop).
-- [ ] Your Google Drive folder is named with your student ID.
-- [ ] You have uploaded your report to the Student Portal.
+- [ ] Your `my_imageids.txt` is committed to your repo and included in your Pull Request.
+- [ ] You have pasted the PR link in the Student Portal.
+- [ ] Your Google Drive folder is named with your student ID and contains images, labels, `my_imageids.txt`, and `report.pdf`.
 
 ## Evaluation Criteria
 
